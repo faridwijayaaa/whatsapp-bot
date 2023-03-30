@@ -106,7 +106,7 @@ async function accessSpreedsheet() {
 
       currentRowCount++;
     } else {
-      console.log("belum ada data baru");
+      // console.log("belum ada data baru");
     }
   } while ((i = 1));
 }

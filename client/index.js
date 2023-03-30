@@ -1,5 +1,10 @@
 const qrcode = require("qrcode-terminal");
-const { Client, LocalAuth, MessageMedia } = require("whatsapp-web.js");
+const {
+  Client,
+  LocalAuth,
+  MessageMedia,
+  ChatTypes,
+} = require("whatsapp-web.js");
 
 const { menuAwal } = require("../src/menus");
 const Restitusi = require("../src/Restitusi");
@@ -46,40 +51,61 @@ client.on("message", async (msg) => {
 
   if (!isSent || msg.body.toLocaleLowerCase() == "/menu") {
     await chat.sendMessage(menuAwal());
+    chat.unmute();
     isSent = true;
   }
 
-  switch (msg.body.toLowerCase()) {
-    case "1":
-      await chat.sendMessage(Restitusi.menuGigi());
-      break;
-    case "2":
-      await chat.sendMessage(Restitusi.menuRawatJalan());
-      break;
-    case "3":
-      await chat.sendMessage(Restitusi.menuRawatInap());
-      break;
-    case "4":
-      await chat.sendMessage(Restitusi.menuKacamata());
-      break;
-    case "5":
-      await chat.sendMessage(Restitusi.faskesPDF());
-      // isSent = false;
-      break;
+  // chat.unmute();
+  console.log(`chat status: ${chat.isMuted}`);
 
-    // SPPD Menu
-    case "6":
-      await chat.sendMessage(Sppd.menuUtama());
-      break;
-    case "7":
-      await chat.sendMessage(Sppd.pengajuanSppd());
-      // isSent = false;
-      break;
-    default:
-      break;
+  if (!chat.isMuted) {
+    console.log("client in");
+    if (msg.body == "0") {
+      await chat.sendMessage(
+        "Mohon tunggu sebentar, kami akan sambungkan ke Admin yang bersangkutan."
+      );
+      await client.sendMessage(
+        "6285732773882@c.us",
+        `${msg.from} Ingin terhubung dengan Admin`
+      );
+      await chat.sendMessage("Admin telah terhubung");
+      chat.mute();
+    } else {
+      switch (msg.body.toLowerCase()) {
+        case "1":
+          await chat.sendMessage(Restitusi.menuGigi());
+          break;
+        case "2":
+          await chat.sendMessage(Restitusi.menuRawatJalan());
+          break;
+        case "3":
+          await chat.sendMessage(Restitusi.menuRawatInap());
+          break;
+        case "4":
+          await chat.sendMessage(Restitusi.menuKacamata());
+          break;
+        case "5":
+          await chat.sendMessage(Restitusi.faskesPDF());
+          // isSent = false;
+          break;
+
+        // SPPD Menu
+        case "6":
+          await chat.sendMessage(Sppd.menuUtama());
+          break;
+        case "7":
+          await chat.sendMessage(Sppd.pengajuanSppd());
+          // isSent = false;
+          break;
+        default:
+          break;
+      }
+    }
+
+    console.log(`isSent: ${isSent}`);
+  } else {
+    console.log("CHAT MUTED");
   }
-
-  console.log(`isSent: ${isSent}`);
 });
 
 module.exports = client;
