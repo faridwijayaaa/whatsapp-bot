@@ -23,7 +23,7 @@ function menuAwal() {
     body: "7. Pengajuan SPPD\n\n",
   };
 
-  let admin = "0. Menghubungkan ke Admin\n\n";
+  let admin = "8. Menghubungkan ke Admin\n\n";
 
   let footer =
     "Cara pilih Fitur atau Jenis Layanan dengan cara, Ketik nomor yang tertera pada Jenis Layanan yang dipilih.\n" +

@@ -37,6 +37,7 @@ client.on("ready", () => {
 });
 
 isSent = false;
+validation = false;
 
 client.on("message", async (msg) => {
   console.log(`Message from ${msg.from}: ${msg.body}`);
@@ -49,27 +50,19 @@ client.on("message", async (msg) => {
     isSent = false;
   }
 
-  if (!isSent || msg.body.toLocaleLowerCase() == "/menu") {
+  if (!isSent || msg.body.toLowerCase() == "/menu") {
     await chat.sendMessage(menuAwal());
-    chat.unmute();
+    await chat.mute();
     isSent = true;
+    validation = false;
   }
 
-  // chat.unmute();
-  console.log(`chat status: ${chat.isMuted}`);
-
-  if (!chat.isMuted) {
-    console.log("client in");
-    if (msg.body == "0") {
+  if (chat.isMuted) {
+    if (msg.body == "8") {
+      await chat.unmute();
       await chat.sendMessage(
-        "Mohon tunggu sebentar, kami akan sambungkan ke Admin yang bersangkutan."
+        "Apakah anda ingin terhubung ke Admin (Ya / Tidak)"
       );
-      await client.sendMessage(
-        "6285732773882@c.us",
-        `${msg.from} Ingin terhubung dengan Admin`
-      );
-      await chat.sendMessage("Admin telah terhubung");
-      chat.mute();
     } else {
       switch (msg.body.toLowerCase()) {
         case "1":
@@ -101,11 +94,31 @@ client.on("message", async (msg) => {
           break;
       }
     }
-
-    console.log(`isSent: ${isSent}`);
-  } else {
-    console.log("CHAT MUTED");
+  } else if (!chat.isMuted && msg.body.toLowerCase() == "ya" && !validation) {
+    validation = true;
+    console.log("UNMUTED");
+    await chat.sendMessage(
+      "Mohon tunggu sebentar, kami akan sambungkan ke Admin yang bersangkutan."
+    );
+    await client.sendMessage(
+      "6285155194942@c.us",
+      `${msg.from} Ingin terhubung dengan Admin`
+    );
+    await chat.sendMessage("Admin telah terhubung");
+  } else if (
+    !chat.isMuted &&
+    msg.body.toLowerCase() &&
+    !validation &&
+    msg.body.toLowerCase() != "/menu"
+  ) {
+    await chat.mute();
+    await chat.sendMessage(menuAwal());
   }
+  console.log(`isSent: ${isSent}`);
+  console.log(`chat status: ${chat.isMuted}`);
+  console.log(`validation status : ${validation}`);
 });
 
 module.exports = client;
+
+// TESTING NOTIF
