@@ -11,6 +11,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "delay": "^5.0.0",
+    "exceljs": "^4.3.0",
     "google-spreadsheet": "^3.3.0",
     "nodemon": "^2.0.21",
     "qrcode-terminal": "^0.12.0",

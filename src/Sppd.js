@@ -15,7 +15,7 @@ class Sppd {
       "2. Melampirkan Surat Perintah.\n" +
       // "3. Menyertakan bukti reservasi transportasi dan penginapan.\n",
       "3. Jika melakukan Reservasi Transportasi atau Penginapan harus menyertekan buktinya.\n" +
-      "\nSilahkan akses link berikut untuk mulai mengisi Formulir pengajuan SPPD https://docs.wwebjs.dev/index.html " +
+      "\nSilahkan akses link berikut untuk mulai mengisi Formulir pengajuan SPPD https://forms.gle/DCYVgL3K19fYze4RA " +
       "atau Ketik */Menu* untuk kembali ke Menu Utama"
     );
   }
