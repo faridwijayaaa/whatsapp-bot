@@ -66,16 +66,17 @@ class Restitusi {
   static menuKacamata() {
     return (
       "Informasi Syarat Reimburse Kacamata\n" +
-      "\nBerkas yang perlu disiapkan: \n" +
-      "1. Kwitansi Hasil Pemeriksaan Mata\n" +
-      "2. Kwitansi Rincian Pembelian Kacamata\n\n" +
+      // "\nUntuk Pemeriksaan awal minimal  \n\n"+
+      "\nBerkas yang perlu disiapkan: \n\n" +
+      "1. Kwitansi Hasil Pemeriksaan Mata, Untuk hasil pemeriksaan awal minimal 0.5 baik silinder maupun minus\n" +
+      "2. Kwitansi Rincian Pembelian Kacamata (Nominal lensa dan frame terpisah). \n\n" +
       "Silahkan Ketik */Menu* untuk kembali ke Menu Utama"
     );
   }
 
   static faskesPDF() {
     const media = MessageMedia.fromFilePath(
-      "/home1/Programming/bot-whatsapp/doc/DAFTAR FASKES JAWA TIMUR.pdf"
+      "/home1/Programming/whatsapp-bot/doc/DAFTAR FASKES JAWA TIMUR.pdf"
     );
     return media;
   }

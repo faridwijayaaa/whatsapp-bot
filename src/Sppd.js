@@ -1,8 +1,14 @@
+const { MessageMedia } = require("whatsapp-web.js");
+
 class Sppd {
   static menuUtama() {
     return (
-      "SPPD adalah kependekan dari Surat Perintah Perjalanan Dinas\n\n" +
-      "Tujuan dari SPPD adalah untuk memberikan persetujuan secara resmi kepada karyawan atau pegawai untuk melakukan perjalanan dinas, serta memberikan informasi tentang detail perjalanan seperti tanggal, waktu, tujuan, anggaran, dan alokasi biaya selama perjalanan.\n\n" +
+      "Informasi SPPD\n\n" +
+      "SPPD merupakan kependekan dari Surat Perintah Perjalanan Dinas, dan yang berhak mengajukan antara lain :\n\n" +
+      "1. PLN Sutojayan -> Kediri\n" +
+      "2. PLN Wlingi -> Kediri\n" +
+      "3. Perjalanan Dinas yang lebih dari 50km\n\n" +
+      "Adapun aturan dari SPPD, Silahkan Ketik *6.1* untuk mendapatkan File PDF tentang aturan SPPD.\n\n" +
       "Silahkan Ketik */Menu* untuk kembali ke Menu Utama"
     );
   }
@@ -18,6 +24,13 @@ class Sppd {
       "\nSilahkan akses link berikut untuk mulai mengisi Formulir pengajuan SPPD https://forms.gle/DCYVgL3K19fYze4RA " +
       "atau Ketik */Menu* untuk kembali ke Menu Utama"
     );
+  }
+
+  static aturanSPPD() {
+    const media = MessageMedia.fromFilePath(
+      "/home1/Programming/whatsapp-bot/doc/ATURAN SPPD.pdf"
+    );
+    return media;
   }
 }
 

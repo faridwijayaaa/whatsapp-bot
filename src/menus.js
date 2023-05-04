@@ -23,7 +23,13 @@ function menuAwal() {
     body: "7. Pengajuan SPPD\n\n",
   };
 
-  let admin = "8. Menghubungkan ke Admin\n\n";
+  let profilePegawai = {
+    header: "*Menu Profil Pegawai*\n",
+    addKeluarga: "8. Unduh Penambahan Anggota Keluarga PDF (diisi)\n",
+    updatePendidikanPegawai: "9. Update Pendidikan terakhir Pegawai\n\n",
+  };
+
+  let admin = "0. Menghubungkan ke Admin\n\n";
 
   let footer =
     "Cara pilih Fitur atau Jenis Layanan dengan cara, Ketik nomor yang tertera pada Jenis Layanan yang dipilih.\n" +
@@ -43,6 +49,9 @@ function menuAwal() {
     sppd.header +
     sppd.information +
     sppd.body +
+    profilePegawai.header +
+    profilePegawai.addKeluarga +
+    profilePegawai.updatePendidikanPegawai +
     admin +
     footer
   );

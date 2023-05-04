@@ -12,17 +12,29 @@ const doc = new GoogleSpreadsheet(
   "1H91ooKhq3dqTLRhmXilU82u7YUKOuFxd6M2yi7j__WE"
 );
 
+const docProfilePegawai = new GoogleSpreadsheet(
+  "1DKD6SiEhG_NKSlc15r-n79SVSr-FYO9Mekaxi1wltSE"
+);
+
 const sheetNumber = 0;
 
 let i = 1;
 async function accessSpreedsheet() {
+  // !! Excel from Pengajuan SPPD = #1
   await doc.useServiceAccountAuth(credentials);
   await doc.loadInfo();
   const sheet = doc.sheetsByIndex[sheetNumber];
   let currentRowCount = sheet.rowCount;
 
+  // !! Excel from Updated Pendidikan Terakhir = #2
+  await docProfilePegawai.useServiceAccountAuth(credentials);
+  await docProfilePegawai.loadInfo();
+  const sheetProfilePegawai = docProfilePegawai.sheetsByIndex[sheetNumber];
+  let currentRowCountPP = sheetProfilePegawai.rowCount;
+
   do {
     await delay(2000);
+    // # 1
     await sheet.loadCells();
     const newRowCount = sheet.rowCount;
 
@@ -108,9 +120,75 @@ async function accessSpreedsheet() {
     } else {
       // console.log("belum ada data baru");
     }
+
+    // # 2
+    await sheetProfilePegawai.loadCells();
+    const newRowCountPP = sheetProfilePegawai.rowCount;
+
+    if (newRowCountPP > currentRowCountPP) {
+      await sheetProfilePegawai.loadHeaderRow();
+      console.log(`New row added at index ${newRowCountPP - 1}`);
+      // console.log(clients);
+
+      let indexNewRow = parseInt(newRowCountPP.toString().substring(1) - 2);
+      const newRow = await sheetProfilePegawai.getRows();
+
+      let timeStamp = newRow[indexNewRow]._rawData[0];
+      let nama = newRow[indexNewRow]._rawData[1];
+      let nip = newRow[indexNewRow]._rawData[2];
+      let unit = newRow[indexNewRow]._rawData[3];
+      let uploadTranskip = newRow[indexNewRow]._rawData[4];
+      let uploadIjazah = newRow[indexNewRow]._rawData[5];
+
+      // Buat file Excel baru dan tambahkan data pada row ke sheet Excel
+      const workbook = new ExcelJS.Workbook();
+      const worksheet = workbook.addWorksheet("Sheet1");
+
+      worksheet.getCell("A1").value = "Timestamp";
+      worksheet.getCell("A2").value = timeStamp;
+      worksheet.getCell("B1").value = "Nama";
+      worksheet.getCell("B2").value = nama;
+      worksheet.getCell("C1").value = "NIP";
+      worksheet.getCell("C2").value = nip;
+      worksheet.getCell("D1").value = "Unit";
+      worksheet.getCell("D2").value = unit;
+      worksheet.getCell("E1").value = "Upload Transkip";
+      worksheet.getCell("E2").value = uploadTranskip;
+      worksheet.getCell("F1").value = "Upload Ijazah";
+      worksheet.getCell("F2").value = uploadIjazah;
+
+      // Simpan file Excel di dalam direktori lokal
+      await workbook.xlsx.writeFile(`./src/UpdatePendidikan_${nip}.xlsx`);
+
+      const sendData = async () => {
+        result = await MessageMedia.fromFilePath(
+          `./src/UpdatePendidikan_${nip}.xlsx`
+        );
+        await clients.sendMessage(
+          "6281231832512@c.us",
+          "Ada yang Update Pendidikan terbaru nichhh!!! 😗"
+        );
+        await clients.sendMessage("6281231832512@c.us", result);
+        console.log("pesan berhasil dikirim");
+        removeHandler();
+      };
+
+      const removeHandler = async () => {
+        await fs.unlink(`./src/UpdatePendidikan_${nip}.xlsx`, (err) => {
+          if (err) throw err;
+          console.log("File deleted");
+        });
+
+        return result;
+      };
+
+      sendData();
+
+      currentRowCountPP++;
+    } else {
+      // console.log("belum ada data baru");
+    }
   } while ((i = 1));
 }
-
-// accessSpreedsheet();
 
 module.exports = { accessSpreedsheet };

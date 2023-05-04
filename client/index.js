@@ -9,6 +9,7 @@ const {
 const { menuAwal } = require("../src/menus");
 const Restitusi = require("../src/Restitusi");
 const Sppd = require("../src/Sppd");
+const profilePegawai = require("../src/profilPegawai");
 
 let sessions = {};
 
@@ -58,7 +59,7 @@ client.on("message", async (msg) => {
   }
 
   if (chat.isMuted) {
-    if (msg.body == "8") {
+    if (msg.body == "0") {
       await chat.unmute();
       await chat.sendMessage(
         "Apakah anda ingin terhubung ke Admin (Ya / Tidak)"
@@ -86,9 +87,18 @@ client.on("message", async (msg) => {
         case "6":
           await chat.sendMessage(Sppd.menuUtama());
           break;
+        case "6.1":
+          await chat.sendMessage(Sppd.aturanSPPD());
+          break;
         case "7":
           await chat.sendMessage(Sppd.pengajuanSppd());
           // isSent = false;
+          break;
+        case "8":
+          await chat.sendMessage(profilePegawai.penambahanAnggotaKeluarga());
+          break;
+        case "9":
+          await chat.sendMessage(profilePegawai.updatePendidikanTerakhir());
           break;
         default:
           break;
@@ -120,5 +130,3 @@ client.on("message", async (msg) => {
 });
 
 module.exports = client;
-
-// TESTING NOTIF
