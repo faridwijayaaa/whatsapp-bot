@@ -97,6 +97,11 @@ client.on("message", async (msg) => {
         case "8":
           await chat.sendMessage(profilePegawai.penambahanAnggotaKeluarga());
           break;
+        case "8.1":
+          await chat.sendMessage(
+            profilePegawai.penambahanAnggotaKeluargaForm()
+          );
+          break;
         case "9":
           await chat.sendMessage(profilePegawai.updatePendidikanTerakhir());
           break;

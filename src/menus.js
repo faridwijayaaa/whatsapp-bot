@@ -25,7 +25,7 @@ function menuAwal() {
 
   let profilePegawai = {
     header: "*Menu Profil Pegawai*\n",
-    addKeluarga: "8. Unduh Penambahan Anggota Keluarga PDF (diisi)\n",
+    addKeluarga: "8. Penambahan Anggota Keluarga\n",
     updatePendidikanPegawai: "9. Update Pendidikan terakhir Pegawai\n\n",
   };
 
